@@ -1,7 +1,7 @@
 CC=gcc
 
-mysh: sh.o get_path.o parse_commandline.o pipe.o list.o sh.o alias.o command_list.o which.o where.o watchuser.o watchmail.o history.o signal_handlers.o pwd.o cd.o setenv.o kill.o warnload.o redirect.o main.c
-	$(CC) -lpthread -lkstat -DHAVE_KSTAT -g main.c get_path.o parse_commandline.o pipe.o list.o sh.o alias.o command_list.o which.o where.o watchuser.o watchmail.o history.o signal_handlers.o pwd.o cd.o setenv.o kill.o warnload.o redirect.o -o mysh
+mysh: sh.o get_path.o parse_commandline.o pipe.o list.o sh.o alias.o command_list.o which.o where.o watchuser.o watchmail.o history.o signal_handlers.o pwd.o cd.o setenv.o kill.o redirect.o main.c
+	$(CC) -pthread -g main.c get_path.o parse_commandline.o pipe.o list.o sh.o alias.o command_list.o which.o where.o watchuser.o watchmail.o history.o signal_handlers.o pwd.o cd.o setenv.o kill.o redirect.o -o mysh
 
 get_path.o: get_path.c get_path.h
 	$(CC) -g -c get_path.c
@@ -28,14 +28,10 @@ where.o: where.c where.h
 	$(CC) -g -c where.c
 
 watchuser.o: watchuser.c watchuser.h
-	$(CC) -lpthread -g -c watchuser.c
+	$(CC) -pthread -g -c watchuser.c
 
 watchmail.o: watchmail.c watchmail.h
-	$(CC) -lpthread -g -c watchmail.c
-
-warnload.o: warnload.c warnload.h
-	$(CC) -lpthread -lkstat -DHAVE_KSTAT -g -c warnload.c
-
+	$(CC) -pthread -g -c watchmail.c
 
 history.o: history.c history.h
 	$(CC) -g -c history.c
@@ -54,9 +50,6 @@ setenv.o: setenv.c setenv.h
 
 kill.o: kill.c kill.h
 	$(CC) -g -c kill.c
-
-showload.o: showload.c showload.h
-	$(CC) -lpthread -lkstat -DHAVE_KSTAT -g -c showload.c
 
 redirect.o: redirect.c redirect.h
 	$(CC) -g -c redirect.c

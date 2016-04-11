@@ -142,13 +142,3 @@ static void *check_file(void *param) {
     sleep(1);
   }
 }
-/* method to print list of inboxes for testing purposes */
-void print_inboxes(struct inbox_node *head)
-{
-    struct inbox_node *curr = head;
-    while(curr != NULL)
-    {
-        printf("%d : %s\n", curr->tid, curr->file_name);
-        curr=curr->next;
-    }
-}

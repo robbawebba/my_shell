@@ -8,7 +8,7 @@ sleep 20 &
 ls &
 pid
 tty
-/bin/ps -lfu nadiakiamilev
+/bin/ps -lfu rcweber
 cd
 pwd
 ls -l
@@ -63,4 +63,4 @@ ls | fgrep .c
 ./test-1+2 |& grep output
 ./test-1+2 |& grep error
 pid
-/bin/ps -lfu nadiakiamilev | grep defunct
+/bin/ps -lfu rcweber | grep defunct

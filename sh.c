@@ -20,42 +20,14 @@
 #include "which.h"
 #include "where.h"
 #include "watchuser.h"
-#include "warnload.h"
 #include "watchmail.h"
 #include "history.h"
 #include "kill.h"
 #include "pwd.h"
 #include "setenv.h"
 #include "signal_handlers.h"
-#include "showload.h"
 #include "redirect.h"
 #include "pipe.h"
-
-int sep_commands(char** rightSide, char** leftSide, char** args, const char* commandline){
-  int i = 0;
-  int piped = 0;
-  int j = 0;
-  int k = 0;
-  while(args[i] != NULL){
-    // printf("args [%d] :  %s\n", i, args[i]);
-    if(piped == 1){
-      rightSide[j] = args[i];
-      j++;
-    }
-    if((strcmp(args[i],"|")==0) || strcmp(args[i],"|&")==0){
-      // printf("hi caught %s\n", args[i]);
-      piped = 1;
-    }
-    else{
-      leftSide[i] = args[i];
-    }
-    i++;
-  }
-  while(rightSide[k] != NULL){
-    k++;
-  }
-  return piped;
-}
 
 int sh( int argc, char **argv, char **envp )
 {
@@ -394,31 +366,6 @@ int sh( int argc, char **argv, char **envp )
       }
       continue;
     }
-    else if((strcmp("warnload", args[0]))==0) {
-      printf("Executing built-in %s \n", args[0]);
-
-      double temp=0.0;
-      if (argsct == 2) {
-        temp = atof(args[1]);
-        warn_lvl = temp; //assigns the user input to the global warning level
-        if (warn_lvl == 0.0) { //checks if the warn level is zero
-          warn_thrd_chk = 0; //reset thread check back to zero
-          printf("exit thread %f : %f ", warn_lvl, temp);
-        }
-        else { //if the warn level is valid
-          if (warn_thrd_chk==0) { //can i actually pass in showload to the last arg?
-            create_warnthread();
-            // pthread_create(pid, NULL, warn_thread, "WARNING THREAD");
-            warn_thrd_chk = 1; //switch check to 1, prevents from creating another thread
-          }
-        }
-      }
-      else if(argsct < 2 || argsct > 2) {
-        errno = EINVAL;
-        perror("warnload");
-      }
-      continue;
-    }
     else if((strcmp("watchuser", args[0]))==0) { //check if we can access the list from here
       pthread_mutex_t lock;
       char *temp = malloc(200);
@@ -585,6 +532,32 @@ char *get_prompt() {
   fgets(new_prompt, PROMPTMAX, stdin);
   strtok(new_prompt, "\n");
   return new_prompt;
+}
+
+int sep_commands(char** rightSide, char** leftSide, char** args, const char* commandline){
+  int i = 0;
+  int piped = 0;
+  int j = 0;
+  int k = 0;
+  while(args[i] != NULL){
+    // printf("args [%d] :  %s\n", i, args[i]);
+    if(piped == 1){
+      rightSide[j] = args[i];
+      j++;
+    }
+    if((strcmp(args[i],"|")==0) || strcmp(args[i],"|&")==0){
+      // printf("hi caught %s\n", args[i]);
+      piped = 1;
+    }
+    else{
+      leftSide[i] = args[i];
+    }
+    i++;
+  }
+  while(rightSide[k] != NULL){
+    k++;
+  }
+  return piped;
 }
 
 //exit the program

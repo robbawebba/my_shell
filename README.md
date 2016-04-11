@@ -12,5 +12,3 @@ To execute:
 3. run 'make'
 4. run './mysh'
 5. use the terminal as is
-
-MUST RUN ON LINUX MACHINE AND SSH TO mlb.acad.ece.udel.edu
