@@ -1,0 +1,5 @@
+To run processes concurrently, all we need to do is to not call waitpid(),
+and just let the shell process continue running. We will then need to go 
+back and clean up zombie processes. 
+
+For Piping, look at Steven's section 9.9
