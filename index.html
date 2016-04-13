@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Mysh : A Custom-Made Unix Shell">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Mysh</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/robertweber95/my_shell">View on GitHub</a>
+
+          <h1 id="project_title">Mysh</h1>
+          <h2 id="project_tagline">A Custom-Made Unix Shell</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/robertweber95/my_shell/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/robertweber95/my_shell/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="mysh" class="anchor" href="#mysh" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>mysh</h1>
+
+<p>A custom-made Unix shell.</p>
+
+<h2>
+<a id="objectives" class="anchor" href="#objectives" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Objectives</h2>
+
+<p>The objectives of this project was to learn how a Unix shell works, to write a simple shell, to create processes, to handle signals, to use various Unix system and C library calls, and to become a better C programmer.</p>
+
+<h2>
+<a id="overview" class="anchor" href="#overview" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Overview</h2>
+
+<p>This shell is implemented with a loop that prints a prompt (consisting of a "prefix," which is initially a blank (space), followed by <code>[cwd]&gt;</code>, where cwd is the "current working directory," and will execute commands until the <code>exit</code> command is entered. In the loop, we check if the command is one of the built-in commands (listed below) or a program in the search paths.</p>
+
+<p><em>This shell only works on *</em>Unix systems** (Mac/Linux) and has <strong>only been tested on OSX 10.11.4 and Ubuntu 14.04 LTS.</strong> *</p>
+
+<h2>
+<a id="how-to-use-this-shell" class="anchor" href="#how-to-use-this-shell" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How to Use this Shell</h2>
+
+<ol>
+<li>Clone or download/extract this repository to the location of your choice</li>
+<li>Navigate to the directory with the shell files with <code>cd</code>
+</li>
+<li>run <code>make clean</code>
+</li>
+<li>run <code>make</code>
+</li>
+<li>run <code>./mysh</code>
+</li>
+</ol>
+
+<h2>
+<a id="built-in-commands-and-features" class="anchor" href="#built-in-commands-and-features" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Built-in commands and features</h2>
+
+<ul>
+<li>
+<strong>exit</strong> - Terminates the shell.</li>
+<li>
+<strong>which</strong> - Find the first instance of the supplied command in the PATH variable. This instance is what is used for executing external commands.</li>
+<li>
+<strong>where</strong> - Reports all known instances of command in the PATH variable</li>
+<li>
+<strong>cd</strong> - Changes directory to directory given.
+
+<ul>
+<li>With no arguments, changes directory to the home directory.</li>
+<li>With a '-' as the only argument, changes directory to directory previously in</li>
+<li>With one argument, changes the directory to the given path.</li>
+</ul>
+</li>
+<li>
+<strong>pwd</strong> - prints the current working directory</li>
+<li>
+<strong>list</strong> - A built-in equivalent to <code>ls</code>
+
+<ul>
+<li>With no arguments, lists the files in the current directory one per line.</li>
+<li>With arguments, lists the files in each directory given as an argument, with a blank line then the name of the directory followed by a : before the list of files in that directory</li>
+</ul>
+</li>
+<li>
+<strong>pid</strong> - prints the pid of the shell</li>
+<li>
+<strong>kill</strong> - When given just a pid sends a <code>SIGTERM</code> to it with kill(2). When given a signal number (with a - in front of it) sends that signal to the pid. (e.g., <code>kill 5678</code>, <code>kill -9 5678</code>).</li>
+<li>
+<strong>prompt</strong> - When ran with no arguments, prompts for a new prompt prefix string. When given an argument make that the new prompt prefix.For instance, let's assume cwd is /usa/robertweber95:</li>
+</ul>
+
+<pre><code>[/usa/robertweber95]&gt; prompt CISC361
+CISC361 [/usa/robertweber95]&gt;
+CISC361 [/usa/robertweber95]&gt; cd 361
+CISC361 [/usa/robertweber95/361]&gt; prompt YES
+YES [/usa/robertweber95/361]&gt; prompt
+input prompt prefix: hello
+hello [/usa/robertweber95/361]&gt;
+</code></pre>
+
+<ul>
+<li>
+<strong>printenv</strong>
+
+<ul>
+<li>When ran with no arguments prints the whole environment.</li>
+<li>When ran with one argument, prints the value of the given environment variable.</li>
+</ul>
+</li>
+<li>
+<strong>alias</strong>
+
+<ul>
+<li>When ran with no arguments prints the aliases the shell knows about.</li>
+<li>When ran with arguments it should install an alias into the alias table the shell knows about.</li>
+</ul>
+</li>
+<li>
+<strong>history</strong> - Prints the last 10 commands executed when ran with no     options.
+
+<ul>
+<li>When ran with a numerical argument, changes the number of commands to list to that number.</li>
+</ul>
+</li>
+<li>
+<strong>setenv</strong>
+
+<ul>
+<li>When ran with no arguments, prints the whole environment, the same as printenv.</li>
+<li>When ran with one argument, sets the value of the argument as an empty environment variable.</li>
+<li>When ran with two arguments, the second one is the value of the first.</li>
+</ul>
+</li>
+<li>
+<strong>Job Backgrounding using <code>&amp;</code></strong> - When the <code>&amp;</code> is the last argument supplied in a command, the given command is executed concurrently as a background job along with the shell, rather than having the shell wait for the process to complete. It is possible that several backgrounded jobs could be running concurrently at the same time. <em>This only works for external commands.</em>
+</li>
+<li>
+<strong>watchmail</strong> - This command takes as the first argument a name of a file, which must already exist to watch for an increase in it's file size. It can take an optional second argument of "off" to turn off of watching of mail for that file:</li>
+</ul>
+
+<pre><code>mysh &gt;&gt; watchmail mbox
+mysh &gt;&gt; echo hello &gt; mbox
+  [You've got mail in mbox on DD/MM/YYYY at hh:mm::ss]
+mysh &gt;&gt; watchmail mbox off
+</code></pre>
+
+<ul>
+<li>
+<strong>File Redirections</strong> - The following file redirections will work:
+
+<ul>
+<li> <code>&gt;</code> redirects standard output of command on left to file on right (i.e. <code>command &gt; file</code>).</li>
+<li>
+<code>&gt;&amp;</code> redirects standard output and standard error of command on left to file on right (i.e. <code>command &gt;&amp; file</code>).</li>
+<li>
+<code>&gt;&gt;</code> redirects standard output of command on left to file on right (i.e. <code>command &gt;&gt; file</code>), appending to the file.</li>
+<li>
+<code>&gt;&gt;&amp;</code> redirects standard output and standard error of command on left to file on right (i.e. <code>command &gt;&gt;&amp; file</code>), appending to the file.
+<code>&lt;</code> redirects standard input of command on left to come from file on the right (i.e. <code>command &lt; file</code>).</li>
+</ul>
+</li>
+<li>
+<strong>noclobber</strong> - Affects how file redirections handle file overwriting and creation. Noclobber prevents accidental overwriting of existing files. Noclobber defaults to 'off'.
+
+<ul>
+<li>when noclobber is off, &gt; and &gt;&amp; will overwrite existing files and &gt;&gt; and &gt;&gt;&amp; will create the file if it doesn't exist.</li>
+<li>When noclobber is on, the shell refuses to overwrite existing files and refuses to create a file when appending to a non-existing file.</li>
+</ul>
+
+<pre><code>[mudskipper6:/usa/cshen/public_html/361/Proj_3 216] tcsh
+mudskipper6[31] [~/public_html/361/Proj_3/]&gt; touch out-file
+mudskipper6[32] [~/public_html/361/Proj_3/]&gt; noclobber
+mudskipper6[33] [~/public_html/361/Proj_3/]&gt; echo hello &gt; out-file
+out-file: File exists.
+mudskipper6[34] [~/public_html/361/Proj_3/]&gt; noclobber
+mudskipper6[35] [~/public_html/361/Proj_3/]&gt; echo hello &gt; out-file
+mudskipper6[36] [~/public_html/361/Proj_3/]&gt; more out-file
+hello
+mudskipper6[37] [~/public_html/361/Proj_3/]&gt;
+</code></pre>
+</li>
+<li>
+<strong>interprocess communication (IPC)</strong> - This includes support for the operators <code>|</code> and <code>|&amp;</code>. The <code>|</code> operator pipes standard output of the command on the left to standard input of the command on the right. (i.e. <code>command1 | command2</code>). For <code>|&amp;</code>, standard error piped as well as standard output. This only works when the command on the right is an external command, however the command on the left could be built-in or external.</li>
+</ul>
+
+<pre><code>  [yankees6.acad.ece.udel.edu:/usa/cshen 132] tcsh
+  yankees6[29] [~/]&gt; which echo
+  usr/bin/echo
+  yankees6[30] [~/]&gt; echo hello world | wc
+         1       2      12
+  yankees6[31] [~/]&gt;
+  yankees6[34] [~/361/2016/apue.3e/intro/]&gt;
+  yankees6[34] [~/361/2016/apue.3e/intro/]&gt; ls X
+  X: No such file or directory
+  yankees6[35] [~/361/2016/apue.3e/intro/]&gt; ls X | wc
+  X: No such file or directory
+         0       0       0
+  yankees6[36] [~/361/2016/apue.3e/intro/]&gt; ls X |&amp; wc
+         1       6      29
+  yankees6[37] [~/361/2016/apue.3e/intro/]&gt;
+</code></pre>
+
+<h2>
+<a id="testing-commands" class="anchor" href="#testing-commands" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Testing commands</h2>
+
+<p>Below is a list of some commands you can use to test the functionality of this shell.</p>
+
+<pre><code>[return]
+Ctrl-D
+Ctrl-Z
+Ctrl-C
+which                     ; test which
+which ls
+ls                      ; execute it
+[return]
+Ctrl-D                  ; make sure still work
+Ctrl-Z
+Ctrl-C
+ls -l                     ; test passing arguments
+ls -l -a /bin/ps
+where                     ; test where
+where ls        
+/bin/ls -l -g   ; test absolutes and passing args
+/bin/ls -l
+blah                      ; try a command that doesn't exist
+/blah                     ; an absolute path that doesn't exist
+ls -l /blah
+/bin                ; try to execute a directory
+/bin/ls -la /
+file /bin/ls /bin/rm
+which ls rm         ; test multiple args
+where ls rm
+list                      ; test list
+list / /usr/bin
+cd                      ; cd to home
+pwd
+cd /blah                ; non-existant
+cd /usr/bin /usr/ucb            ; too many args
+cd -                    ; should go back to shell dir
+pwd
+cd /bin
+pwd
+./ls /                  ; test more absolutes
+../bin/ls /
+history                 ; test history
+history 15
+history
+history 5
+history
+pid                 ; get pid for later use
+kill
+kill pid-of-shell           ; test default
+kill -1 pid-of-shell            ; test sending a signal, should kill
+                                    ; the shell, so restart a new one
+prompt      (and enter some prompt prefix)
+prompt mysh
+alias lst ls -l
+alias
+ls
+lst
+where lst
+printenv PATH
+printenv
+setenv
+setenv TEST
+printenv TEST
+setenv TEST testing
+printenv TEST
+setenv TEST testing more
+setenv HOME /
+cd
+pwd
+cd -
+pwd
+ls &amp;
+ls -l &amp;
+sleep 20 &amp;
+ls &amp;          ; Execute before sleep ends
+ps            ; call ps to see backgrounded sleep process
+pid
+tty
+/bin/ps -lfu rweber
+ls -l
+rm -f mail1 mail2
+touch mail1
+watchmail mail1
+echo hi &gt;&gt; mail1
+echo HiThere &gt; mail2
+watchmail mail2
+echo there &gt;&gt; mail1
+echo Subject: &gt;&gt; mail2
+cat mail1
+cat mail2
+watchmail mail1 off
+echo bye &gt;&gt; mail1
+echo bye &gt;&gt; mail2
+grep hi &lt; mail1
+ls | fgrep .c
+pid
+/bin/ps -lfu rweber | grep defunct  ; Check for zombie processes
+exit
+</code></pre>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Mysh maintained by <a href="https://github.com/robertweber95">robertweber95</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
