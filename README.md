@@ -1,9 +1,9 @@
 # mysh
 A custom-made Unix shell.
 
-## Objectives
+## Objective
 
-The objectives of this project was to learn how a Unix shell works, to write a simple shell, to create processes, to handle signals, to use various Unix system and C library calls, and to become a better C programmer.
+The objective of this project was to learn how a Unix shell works, to write a simple shell, to create processes, to handle signals, to use various Unix system and C library calls, and to become a better C programmer.
 
 ## Overview
 
@@ -101,7 +101,7 @@ mysh >> watchmail mbox off
          1       6      29
   yankees6[37] [~/361/2016/apue.3e/intro/]>
 ```
-##Testing commands
+## Testing commands
 Below is a list of some commands you can use to test the functionality of this shell.
 ```
 [return]
