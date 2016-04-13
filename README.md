@@ -83,8 +83,8 @@ mysh >> watchmail mbox off
   hello
   mudskipper6[37] [~/public_html/361/Proj_3/]>
   ```
-* **interprocess communication (IPC)**. This is adding support for `|` and `|&`. The `|` operator pipes standard output of the command on the left to standard input of the command on the right. (i.e. `command1 | command2`). For `|&`, standard error piped as well as standard output. This only works when the command on the right is an external command, however the command on the left could be built-in or external.
-  ```
+* **interprocess communication (IPC)** - This includes support for the operators `|` and `|&`. The `|` operator pipes standard output of the command on the left to standard input of the command on the right. (i.e. `command1 | command2`). For `|&`, standard error piped as well as standard output. This only works when the command on the right is an external command, however the command on the left could be built-in or external.
+```
   [yankees6.acad.ece.udel.edu:/usa/cshen 132] tcsh
   yankees6[29] [~/]> which echo
   usr/bin/echo
@@ -100,8 +100,8 @@ mysh >> watchmail mbox off
   yankees6[36] [~/361/2016/apue.3e/intro/]> ls X |& wc
          1       6      29
   yankees6[37] [~/361/2016/apue.3e/intro/]>
-  ```
-## Testing commands
+```
+##Testing commands
 Below is a list of some commands you can use to test the functionality of this shell.
 ```
 [return]
